@@ -57,16 +57,17 @@ function renderCountryList(countries) {
 }
 
 function renderCountryInfo(countries) {
-  const fullCountryInfo = countries
-    .map(({ name, capital, population, flags, languages }) => {
-      return `
+  countryList.innerHTML = '';
+  const fullCountryInfo = ({ name, capital, population, flags, languages }) => {
+    const languageNames = Object.values(languages).join(', ');
+    return `
     <img class="country_flag" src="${flags.png}" alt="${name.official} flag"/>
     <h1><span class="country_name">Country name:</span> ${name.official}<h1> 
     <h3><b> Capital:</b> ${capital}</h3> 
     <h3><b> Population: </b> ${population}</h3>
-    <h3><b> Languages: </b> ${languages}</h3>
+    <h3><b> Languages: </b> ${languageNames}</h3>
     `;
-    })
-    .join('');
-  countryInfo.innerHTML = fullCountryInfo;
+  };
+
+  countryInfo.innerHTML = fullCountryInfo(countries);
 }

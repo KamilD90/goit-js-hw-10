@@ -4,9 +4,9 @@ import { fetchCountries } from './fetchCountries.js';
 import { debounce } from 'lodash';
 const DEBOUNCE_DELAY = 300;
 
-const countryInput = document.getElementById('search-box');
-const countryList = document.querySelector('.country-list');
-const countryInfo = document.querySelector('.country-info');
+const countryInput = document.getElementById('search__box');
+const countryList = document.querySelector('.country__list');
+const countryInfo = document.querySelector('.country__info');
 
 function handleInput() {
   //metoda trim() ucina niepotrzebne spacje na początku i końcu
@@ -45,11 +45,12 @@ const debouncedHandleInput = debounce(handleInput, DEBOUNCE_DELAY);
 countryInput.addEventListener('input', debouncedHandleInput);
 
 function renderCountryList(countries) {
+  countryInfo.innerHTML = '';
   const similarCountries = countries
     .map(({ name, flags }) => {
-      return `<li>
-          <h3 class="country_name">${name.official}</h3>
-          <img class="country_flag" src="${flags.png}" alt="${name.official} flag"/>
+      return `<li class= list__item>
+      <img class="flag" src="${flags.png}" alt="${name.official} flag"/>
+      <h3 class="country__names">${name.official}</h3>
         </li>`;
     })
     .join('');
@@ -61,11 +62,13 @@ function renderCountryInfo(countries) {
   const fullCountryInfo = ({ name, capital, population, flags, languages }) => {
     const languageNames = Object.values(languages).join(', ');
     return `
-    <img class="country_flag" src="${flags.png}" alt="${name.official} flag"/>
-    <h1><span class="country_name">Country name:</span> ${name.official}<h1> 
-    <h3><b> Capital:</b> ${capital}</h3> 
-    <h3><b> Population: </b> ${population}</h3>
-    <h3><b> Languages: </b> ${languageNames}</h3>
+    <div class= "flag-country">
+    <img class="flag" src="${flags.png}" alt="${name.official} flag"/>
+      <h1>${name.official}</h1>  
+    </div>
+    <h3 class="minor__properities"><b> Capital:</b> ${capital}</h3> 
+    <h3 class="minor__properities"><b> Population: </b> ${population}</h3>
+    <h3 class="minor__properities"><b> Languages: </b> ${languageNames}</h3>
     `;
   };
 
